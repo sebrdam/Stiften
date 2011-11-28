@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * 
  * @author Youri Tjang
@@ -10,10 +12,13 @@ public class App {
 	 */
 	public static void main(String[] args) {
 		Deck deck = new Deck();
-		deck.fillDeck();
-		deck.shuffle();
+		deck.debug = true;
 		
-		Card card = new Card(/*Bijvoorbeeld. Harten Aas */);
+		deck.fillDeck();
+		//deck.shuffle();
+		
+		Card card = new Card(Number.ACE, Suit.RUITEN);
+		
 		int testIndex = 30;
 		deck.insertAt(card, testIndex);
 		System.out.print("Sequential search ...");
@@ -22,6 +27,10 @@ public class App {
 		
 		System.out.print("Binary search...");
 		deck.sort();
+deck.debug();
+
+System.out.println(Arrays.asList(Suit.values()));
+
 		foundIndex = deck.binarySearch(card);
 		System.out.println(foundIndex);
 
