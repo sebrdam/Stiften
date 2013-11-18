@@ -17,7 +17,7 @@ public class Deck {
 	 * Vult de array met 52 kaarten: 2,3 ... ,10,V,B,K,A van klaveren, schoppen,
 	 * harten en ruiten.
 	 */
-	public void fillDeck() {
+	public void fill() {
 	}
 
 	/**
@@ -115,6 +115,10 @@ public class Deck {
 		String str = "";
 
 		return str + "\n";
+	}
+	
+	public int compareTo(Deck d){
+		return 0;
 	}
 
 }

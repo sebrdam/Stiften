@@ -1,4 +1,3 @@
-package Arrays;
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -25,7 +24,6 @@ public class DeckTest {
 	@Before
 	public void setUp() throws Exception {
 		deck = new Deck();
-		deck.debug = false;
 	}
 
 	@After

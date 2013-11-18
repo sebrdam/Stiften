@@ -7,7 +7,7 @@ public class Card implements Comparable<Card> {
 	 * @param number
 	 * @param suit
 	 */
-	Card() {
+	Card(Number num, Suit suit) {
 	}
 
 
