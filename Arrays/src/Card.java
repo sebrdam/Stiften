@@ -1,6 +1,8 @@
 public class Card implements Comparable<Card> {
 
 
+	String num1;
+	String suit1;
 	/**
 	 * Constructor
 	 * 
@@ -8,6 +10,10 @@ public class Card implements Comparable<Card> {
 	 * @param suit
 	 */
 	Card(Number num, Suit suit) {
+		
+		this.num1 = num.toString();
+		this.suit1 = suit.toString();
+		
 	}
 
 
@@ -15,7 +21,8 @@ public class Card implements Comparable<Card> {
 	 * Pretty-print deze Card als string
 	 */
 	public String toString() {
-		return "Aas" + " van " + "Ruiten";
+		//return "Aas" + " van " + "Ruiten";
+		return num1 + " van " + suit1;
 	}
 
 	/**

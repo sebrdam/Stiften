@@ -1,16 +1,37 @@
+import java.util.Arrays;
+
 /**
  * Een deck met Cards
  * 
  */
 public class Deck {
 
+	public static void main(String[] args) {
+
+		Deck d = new Deck();
+
+		d.fill();
+		Card bas = new Card(Number.BOER, Suit.KLAVEREN);
+	    d.insertAt(bas, 1);
+		 //d.delete(5);
+		// d.shuffle();
+		// d.cardSwap(1, 0);
+		// d.sequentialSearch(bas);
+		// d.sort();
+		int test = d.binarySearch(bas);
+		System.out.println(test);
+	}
+
 	Card[] cardArray;
+
+	int size = 52;
+	int result;
 
 	/**
 	 * Constructor. Maakt een deck met lengte 0.
 	 */
 	Deck() {
-		cardArray = new Card[0];
+		cardArray = new Card[size];
 	}
 
 	/**
@@ -18,6 +39,19 @@ public class Deck {
 	 * harten en ruiten.
 	 */
 	public void fill() {
+		int i = 0;
+
+		for (Suit suit : Suit.values()) {
+			// System.out.println(suit);
+			for (Number num : Number.values()) {
+				Card c = new Card(num, suit);
+				cardArray[i] = c;
+				i++;
+			}
+
+		}
+		// System.out.println(cardArray[25]);
+
 	}
 
 	/**
@@ -31,6 +65,13 @@ public class Deck {
 	 *            Op positie
 	 */
 	public void insertAt(Card card, int index) {
+
+		cardArray = Arrays.copyOf(cardArray, cardArray.length + 1);
+
+		for (int i = cardArray.length - 1; i > index; i--) {
+			cardArray[i] = cardArray[i - 1];
+		}
+		cardArray[index] = card;
 	}
 
 	/**
@@ -43,6 +84,11 @@ public class Deck {
 	 * @param index
 	 */
 	public void delete(int index) {
+
+		System.arraycopy(cardArray, index + 1, cardArray, index,
+				cardArray.length - 1 - index);
+		cardArray = Arrays.copyOf(cardArray, cardArray.length - 1);
+
 	}
 
 	/**
@@ -52,6 +98,15 @@ public class Deck {
 	 */
 	public void shuffle() {
 
+		for (int i = cardArray.length - 1; i > -1; i--) {
+			int j = (int) Math.floor(Math.random() * (i + 1));
+			Card temp = cardArray[i];
+			cardArray[i] = cardArray[j];
+			cardArray[j] = temp;
+
+			// System.out.println(cardArray[i] + "-" + i);
+		}
+
 	}
 
 	/**
@@ -60,7 +115,12 @@ public class Deck {
 	 * @param indexA
 	 * @param indexB
 	 */
-	private void cardSwap(int indexA, int indexB) {
+	public void cardSwap(int indexA, int indexB) {
+		Card temp = cardArray[indexA];
+		cardArray[indexA] = cardArray[indexB];
+		cardArray[indexB] = temp;
+
+		// System.out.println(cardArray[1]);
 	}
 
 	/**
@@ -72,8 +132,23 @@ public class Deck {
 	 * @return De index van de gevonden kaart
 	 */
 	public int sequentialSearch(Card card) {
-		int result = -1;
+
+		for (int i = cardArray.length - 1; i > -1; i--) {
+
+			// System.out.println(cardArray[i] + "-" + i);
+
+			Card temp = cardArray[i];
+
+			if (temp.toString().contentEquals(card.toString())) {
+				result = i;
+
+			}
+		}
+
+		// System.out.println(result);
+
 		return result;
+
 	}
 
 	/**
@@ -81,15 +156,49 @@ public class Deck {
 	 * als de volgorde hetzelfde is als na {@link #fillDeck()}
 	 */
 	public void sort() {
+
+		int nieuw = 0;
+
+		Card[] cardArray1 = new Card[cardArray.length];
+
+		for (Suit suit : Suit.values()) {
+
+			for (Number num : Number.values()) {
+
+				for (int i = 0; i < cardArray.length; i++) {
+
+					String bas = cardArray[i].num1;
+					String bas1 = cardArray[i].suit1;
+					String bas2 = suit.toString();
+					String bas3 = num.toString();
+
+					if ((bas2.equals(bas1)) && (bas3.equals(bas))) {
+
+						Card c = new Card(num, suit);
+						cardArray1[nieuw] = c;
+						System.out.println(cardArray1[nieuw]);
+						nieuw++;
+
+					}
+
+				}
+			}
+
+		}
+
+		cardArray = Arrays.copyOf(cardArray1, cardArray1.length);
+
+		// System.out.println(cardArray1.length);
 	}
 
 	/**
 	 * Vertelt of het deck gesorteerd is.
+	 * 
 	 * @return
 	 */
-	public boolean isSorted(){
+	public boolean isSorted() {
 		boolean sorted = true;
-		//...
+		// ...
 		return sorted;
 	}
 
@@ -102,10 +211,26 @@ public class Deck {
 	 * @return De index van de gevonden kaart
 	 */
 	public int binarySearch(Card card) {
-		int result = -1;
-		return result;
-	}
 
+		int testcard = sequentialSearch(card);
+
+		int lo = 0;
+		int hi = cardArray.length;
+		while (lo < hi) {
+			int i = (lo + hi) / 2;
+			int testcard1 = sequentialSearch(cardArray[i]);
+			if (testcard1 == testcard) {
+				return i;
+			} else if (testcard1 < testcard) {
+				lo = i + 1;
+			} else {
+				hi = i;
+			}
+		}
+
+		return -1;
+
+	}
 
 	/**
 	 * Pretty-print het deck.
@@ -116,8 +241,8 @@ public class Deck {
 
 		return str + "\n";
 	}
-	
-	public int compareTo(Deck d){
+
+	public int compareTo(Deck d) {
 		return 0;
 	}
 
